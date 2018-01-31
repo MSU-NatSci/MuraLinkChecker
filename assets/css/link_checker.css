@@ -1,0 +1,40 @@
+
+.mura .content p {
+    margin-bottom: 0.5em !important;
+}
+
+#brokenLinksTable {
+    border-collapse: collapse;
+}
+
+#brokenLinksTable > caption {
+    color: #646464;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 0;
+}
+
+#brokenLinksTable > thead {
+    background-color: #F6F6F6;
+}
+
+#brokenLinksTable > tbody > tr:nth-of-type(2n) {
+    background-color: #F6FAFE;
+}
+
+#brokenLinksTable > tbody > tr:nth-of-type(2n+1) {
+    background-color: #FFF;
+}
+
+#brokenLinksTable th, #brokenLinksTable td {
+    border: 1px solid #888;
+    padding: 5px;
+}
+
+#brokenLinksTable code {
+    color: black;
+    background-color: inherit;
+    padding: 0;
+    font-size: 100%;
+    border-radius: 0;
+}
