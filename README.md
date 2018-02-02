@@ -20,3 +20,5 @@ The status is usually the returned status code, but it can be a string for inter
 
 - Some sites do not support the HEAD method used by the link checker, and will report a 405 status code.
 
+- When DNS resolution is very slow, a status can be `unknown host`, even when the timeout is increased.
+Unfortunately, Java does not provide a way to set the DNS resolution timeout (which is not part of the connection timeout entered in the link checker).
