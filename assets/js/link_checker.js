@@ -113,6 +113,8 @@ let startNextCheck = function() {
         let page = pages[pageIndex];
         while (urls.length < maxBatch && linkIndex < page.links.length) {
             let url = page.links[linkIndex].url;
+            if (!/^\/|^[a-zA-Z]+:\/\//.test(url))
+                url = page.url + url; // link relative to the page
             urlInfos.push({
                 url: url,
                 element: page.links[linkIndex].element,
