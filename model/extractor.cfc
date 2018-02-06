@@ -44,7 +44,7 @@ component {
         var pos = 1;
         var done = false;
         while (!done) {
-            var matches = text.reFind('<(a|img|video|audio|source|track|embed|script|iframe)[^>]*(?:href|src)\s?=\s?["'']([^"''>]*)["'']', pos, true);
+            var matches = text.reFind('<(a|img|video|audio|source|track|embed|script|iframe)[^>]*(?:href|src)\s?=\s?(?:"([^">]*)"|''([^''>]*)'')', pos, true);
             if (matches.len[1] != 0) { // match
                 var element = text.mid(matches.pos[2], matches.len[2]);
                 var theURL = text.mid(matches.pos[3], matches.len[3]);
