@@ -164,7 +164,7 @@ let continueNextCheck = function(urlInfos, results, oldResults) {
     results = results.concat(oldResults);
     for (let result of results) {
         if (result.status != '200' &&
-                (!ignoreRedirects || (result.status != '301' && result.status != '302'))) {
+                (!ignoreRedirects || result.status == null || !/^3[0-9][0-9]/.test(result.status))) {
             nbBroken++;
             let infos = null;
             for (let inf of urlInfos) {
