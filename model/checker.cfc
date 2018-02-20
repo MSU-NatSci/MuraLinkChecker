@@ -113,13 +113,23 @@ component {
     }
 
     private any function initNaiveSSL() {
+        //var pluginPath = "#$.getConfigBean().getPluginDir()#/#pluginConfig.getDirectory()#";
+        //var libFolder = "#pluginPath#/java/dist";
+        //var jarArray = [
+        //    '#libFolder#/naiveSSL.jar'
+        //];
+        //var javaLoader = createObject('component', 'mura.javaloader.JavaLoader').init(jarArray);
+        //var naive = javaLoader.create('linkchecker.NaiveSSL').init();
+
+        // directly with URLClassLoader (JavaLoader is no longer part of Mura)
         var pluginPath = "#$.getConfigBean().getPluginDir()#/#pluginConfig.getDirectory()#";
         var libFolder = "#pluginPath#/java/dist";
-        var jarArray = [
-            '#libFolder#/naiveSSL.jar'
-        ];
-        var javaLoader = createObject('component', 'mura.javaloader.JavaLoader').init(jarArray);
-        var naive = javaLoader.create('linkchecker.NaiveSSL').init();
+        var naiveJarPath = "#libFolder#/naiveSSL.jar";
+        var naiveJarURL = createObject('java', 'java.io.File').init(naiveJarPath).toURI().toURL();
+        var classLoader = createObject('java', 'java.net.URLClassLoader').init([naiveJarURL]);
+        var naiveClass = classLoader.loadClass('linkchecker.NaiveSSL');
+        var naive = naiveClass.newInstance();
+        classLoader.close(); // to avoid locking the jar
         return naive;
     }
 }
