@@ -23,7 +23,8 @@ component {
             var status = '-1';
             if (aURL.findNoCase('ftp://') == 1) {
                 status = "unsupported protocol";
-            } else if (aURL.reFind('^/[^/]') > 0 && aURL.reFind('^/[^/]+/(cache|assets)/') == 0) {
+            } else if (aURL.reFind('^/[^/]') > 0 &&
+                    aURL.reFind('^(?:/sites)?/[^/]+/(cache|assets)/') == 0) {
                 // local link but not cache or assets (should be content)
                 // we can check the db for a faster result
                 var path = aURL.reReplace('^/|/$', '', 'all');
