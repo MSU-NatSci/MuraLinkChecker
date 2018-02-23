@@ -57,5 +57,5 @@
     </div>
 </cfoutput></cfsavecontent>
 <cfoutput>
-	#$.getBean('pluginManager').renderAdminTemplate(body=body, pagetitle=pluginConfig.getName())#
+    #$.getBean('pluginManager').renderAdminTemplate(body=body, pagetitle=pluginConfig.getName())#
 </cfoutput>

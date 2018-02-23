@@ -3,15 +3,15 @@
  */
 component {
 
-	public function init($) {
-		variables.$ = $;
-	}
+    public function init($) {
+        variables.$ = $;
+    }
 
-	/**
-	 * Returns an array with the pages.
+    /**
+     * Returns an array with the pages.
      * Each page object has url and links. Each link has element and url.
-	 */
-	public array function extractLinks() {
+     */
+    public array function extractLinks() {
         var pages = [];
         var feedBean = $.getFeed('content');
         feedBean.setMaxItems(0);
@@ -34,7 +34,7 @@ component {
             });
         }
         return pages;
-	}
+    }
 
     /**
      * Returns an array of (string element, string url)

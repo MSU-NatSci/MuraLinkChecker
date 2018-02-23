@@ -3,15 +3,15 @@
  */
 component {
 
-	public function init($, pluginConfig) {
-		variables.$ = $;
-		variables.pluginConfig = pluginConfig;
-	}
+    public function init($, pluginConfig) {
+        variables.$ = $;
+        variables.pluginConfig = pluginConfig;
+    }
 
-	/**
-	 * returns an array of (string url, string status)
-	 */
-	public array function check(required array urls, required numeric timeout,
+    /**
+     * returns an array of (string url, string status)
+     */
+    public array function check(required array urls, required numeric timeout,
             required boolean followRedirects) {
         var results = [];
 
@@ -63,9 +63,9 @@ component {
         /* cfhttp does not work well with SSL (some validations fail and we don't get a code)
         if (len(application.configBean.getProxyServer())) {
             cfhttp(url=aURL, method="HEAD", timeout=timeout, result="result",
-					proxyUser="#configBean.getProxyUser()#" ,
-					proxyPassword="#configBean.getProxyPassword()#",
-					proxyServer="#configBean.getProxyServer()#" ,
+                    proxyUser="#configBean.getProxyUser()#" ,
+                    proxyPassword="#configBean.getProxyPassword()#",
+                    proxyServer="#configBean.getProxyServer()#" ,
                     proxyPort="#configBean.getProxyPort()#");
         } else {
             cfhttp(url=aURL, method="HEAD", timeout=timeout, result="result");
