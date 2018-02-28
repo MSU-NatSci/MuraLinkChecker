@@ -162,69 +162,69 @@ let continueNextCheck = function(urlInfos, results, oldResults) {
     nbLinksCheckedSpan.innerHTML = '' + linkCount;
     allResults = allResults.concat(results);
     results = results.concat(oldResults);
-    for (let result of results) {
-        if (result.status != '200' &&
-                (!ignoreRedirects || result.status == null || !/^3[0-9][0-9]/.test(result.status))) {
-            nbBroken++;
-            let infos = null;
-            for (let inf of urlInfos) {
-                if (inf.url == result.url) {
-                    infos = inf;
-                    break;
-                }
-            }
-            if (infos != null) {
-                let tbody = document.getElementById('brokenLinksTableBody');
-                let tr = document.createElement('tr');
-                let td;
-                if (infos.page != currentPageURL) {
-                    td = document.createElement('td');
-                    let pageLink = document.createElement('a');
-                    let pageURL = infos.page;
-                    if (pageURL.startsWith('/'))
-                        pageURL = muraLinkCheckerSiteURL + pageURL;
-                    pageLink.setAttribute('href', pageURL);
-                    pageLink.setAttribute('target', 'brokenLink');
-                    pageLink.appendChild(document.createTextNode(infos.page));
-                    td.appendChild(pageLink);
-                    tr.appendChild(td);
-                    currentPageTD = td;
-                } else {
-                    let rows = currentPageTD.getAttribute('rowspan');
-                    if (rows == null)
-                        rows = 1;
-                    else
-                        rows = parseInt(rows);
-                    currentPageTD.setAttribute('rowspan', rows + 1);
-                }
-                td = document.createElement('td');
-                let resCode = document.createElement('code');
-                resCode.appendChild(document.createTextNode(result.status));
-                td.appendChild(resCode);
-                tr.appendChild(td);
-                td = document.createElement('td');
-                let elementCode = document.createElement('code');
-                elementCode.appendChild(document.createTextNode(infos.element));
-                td.appendChild(elementCode);
-                tr.appendChild(td);
-                td = document.createElement('td');
-                if (infos.url.startsWith('/') || infos.url.startsWith('http')) {
-                    let docLink = document.createElement('a');
-                    let linkurl = infos.url;
-                    if (linkurl.startsWith('/'))
-                        linkurl = muraLinkCheckerSiteURL + linkurl;
-                    docLink.setAttribute('href', linkurl);
-                    docLink.setAttribute('target', 'brokenLink');
-                    docLink.appendChild(document.createTextNode(infos.url));
-                    td.appendChild(docLink);
-                } else {
-                    td.appendChild(document.createTextNode(infos.url));
-                }
-                tr.appendChild(td);
-                tbody.appendChild(tr);
-                currentPageURL = infos.page;
+    for (let infos of urlInfos) {
+        let result = null;
+        for (let res of results) {
+            if (res.url == infos.url) {
+                result = res;
+                break;
             }
         }
+        if (result == null)
+            continue;
+        if (result.status == '200' ||
+                (ignoreRedirects && result.status != null && /^3[0-9][0-9]/.test(result.status)))
+            continue;
+        nbBroken++;
+        let tbody = document.getElementById('brokenLinksTableBody');
+        let tr = document.createElement('tr');
+        let td;
+        if (infos.page != currentPageURL) {
+            td = document.createElement('td');
+            let pageLink = document.createElement('a');
+            let pageURL = infos.page;
+            if (pageURL.startsWith('/'))
+                pageURL = muraLinkCheckerSiteURL + pageURL;
+            pageLink.setAttribute('href', pageURL);
+            pageLink.setAttribute('target', 'brokenLink');
+            pageLink.appendChild(document.createTextNode(infos.page));
+            td.appendChild(pageLink);
+            tr.appendChild(td);
+            currentPageTD = td;
+        } else {
+            let rows = currentPageTD.getAttribute('rowspan');
+            if (rows == null)
+                rows = 1;
+            else
+                rows = parseInt(rows);
+            currentPageTD.setAttribute('rowspan', rows + 1);
+        }
+        td = document.createElement('td');
+        let resCode = document.createElement('code');
+        resCode.appendChild(document.createTextNode(result.status));
+        td.appendChild(resCode);
+        tr.appendChild(td);
+        td = document.createElement('td');
+        let elementCode = document.createElement('code');
+        elementCode.appendChild(document.createTextNode(infos.element));
+        td.appendChild(elementCode);
+        tr.appendChild(td);
+        td = document.createElement('td');
+        if (infos.url.startsWith('/') || infos.url.startsWith('http')) {
+            let docLink = document.createElement('a');
+            let linkurl = infos.url;
+            if (linkurl.startsWith('/'))
+                linkurl = muraLinkCheckerSiteURL + linkurl;
+            docLink.setAttribute('href', linkurl);
+            docLink.setAttribute('target', 'brokenLink');
+            docLink.appendChild(document.createTextNode(infos.url));
+            td.appendChild(docLink);
+        } else {
+            td.appendChild(document.createTextNode(infos.url));
+        }
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        currentPageURL = infos.page;
     }
     let nbBrokenSpan = document.getElementById('nbBroken');
     nbBrokenSpan.innerHTML = '' + nbBroken;
