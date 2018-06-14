@@ -19,12 +19,22 @@ component {
         var naiveSSL = initNaiveSSL();
 
         var baseURL = $.siteConfig().getWebPath(complete=1);
+        var webroot = $.getBean('configBean').getWebRoot();
         for (var aURL in urls) {
             var status = '-1';
+            // remove protocol/domain from the URL for the current site to be able to check static files faster
+            if (aURL.find(baseURL) == 1)
+                aURL = aURL.mid(1 + baseURL.len(), aURL.len() - baseURL.len());
             if (aURL.findNoCase('ftp://') == 1) {
                 status = "unsupported protocol";
-            } else if (aURL.reFind('^/[^/]') > 0 &&
-                    aURL.reFind('^(?:/sites)?/[^/]+/(cache|assets)/') == 0) {
+            } else if (aURL.reFind('^(?:/sites)?/[^/]+/(cache|assets)/') == 1) {
+                // cache or asset file: check on disk first to save time
+                var filePath = webroot & URLDecode(aURL);
+                if (fileExists(filePath))
+                    status = '200';
+                else
+                    status = testURL(baseURL & aURL, timeout, followRedirects, naiveSSL);
+            } else if (aURL.reFind('^/[^/]') > 0) {
                 // local link but not cache or assets (should be content)
                 // we can check the db for a faster result
                 var path = aURL.reReplace('^/|/$', '', 'all');
