@@ -1,12 +1,11 @@
 
 <cfsavecontent variable="head"><cfoutput>
-    <cfset pluginspath = $.siteConfig().getPluginsPath()>
-    <link href="#pluginspath#/#settings.package#/assets/css/link_checker.css" rel="stylesheet">
+    <link href="assets/css/link_checker.css" rel="stylesheet">
     <script>
-        muraLinkCheckerPath = "#pluginspath#/#settings.package#/";
+        muraLinkCheckerPath = window.location;
         muraLinkCheckerSiteURL = "#$.siteConfig().getWebPath(complete=1)#";
     </script>
-    <script src="#pluginspath#/#settings.package#/assets/js/link_checker.js" defer></script>
+    <script src="assets/js/link_checker.js" defer></script>
 </cfoutput></cfsavecontent>
 <cfhtmlhead text='#head#'>
 
