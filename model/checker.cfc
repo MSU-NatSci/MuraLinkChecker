@@ -43,6 +43,8 @@ component {
                 var page = $.getBean('content').loadBy(filename=path);
                 if (page.getIsNew())
                     status = 'not found';
+                else if (page.getDisplay() == 0)
+                    status = 'not displayed';
                 else
                     status = '200';
             } else {
