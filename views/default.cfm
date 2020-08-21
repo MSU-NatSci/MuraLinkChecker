@@ -1,4 +1,9 @@
 
+<cfif getBaseTemplatePath() eq getCurrentTemplatePath()>
+    Direct execution denied.
+    <cfabort>
+</cfif>
+
 <cfsavecontent variable="head"><cfoutput>
     <link href="assets/css/link_checker.css" rel="stylesheet">
     <script>

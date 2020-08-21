@@ -1,5 +1,7 @@
 
 <cfscript>
+    include 'plugin/config.cfm';
+
     import model.Extractor;
     import model.Checker;
 
@@ -28,5 +30,3 @@
         }
     }
 </cfscript>
-
-
